@@ -65,13 +65,69 @@ const NotesAppNavbar = () => {
             </div>
 
             {/* Hamburger for mobile */}
-            <button
-              className="md:hidden flex items-center justify-center p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-all duration-200"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="Open menu"
-            >
-              <Menu className="h-6 w-6 text-white" />
-            </button>
+            <div className="flex items-center md:hidden gap-2">
+              {/* Profile/Login Icon - Always visible on mobile */}
+              {user ? (
+                <div className="relative">
+                  <button
+                    onClick={handleProfileClick}
+                    className="flex items-center space-x-2 bg-white bg-opacity-20 rounded-full px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  >
+                    <User className="h-6 w-6 text-white" />
+                    <span className="text-white font-semibold max-w-[100px] truncate hidden xs:inline">{user.username}</span>
+                    <ChevronDown className={`h-4 w-4 text-white transition-transform duration-200 ${profileDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {profileDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 z-50 animate-fade-in">
+                      <div className="px-4 py-2 text-gray-700 font-semibold border-b max-w-full truncate" title={user.email}>{user.email}</div>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 font-medium rounded-b-xl transition-colors duration-200"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                  {showLogoutDialog && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
+                      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-xs w-full text-center">
+                        <h3 className="text-lg font-bold mb-4">Confirm Logout</h3>
+                        <p className="mb-6 text-gray-700">Are you sure you want to logout?</p>
+                        <div className="flex justify-center gap-4">
+                          <button
+                            onClick={confirmLogout}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+                          >
+                            Yes, Logout
+                          </button>
+                          <button
+                            onClick={cancelLogout}
+                            className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-300 transition"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  onClick={openLogin}
+                  className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2 transition-all duration-200 hover:scale-110"
+                >
+                  <User className="h-6 w-6 text-white" />
+                </button>
+              )}
+              {/* Hamburger Icon */}
+              <button
+                className="flex items-center justify-center p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-all duration-200"
+                onClick={() => setMobileMenuOpen(true)}
+                aria-label="Open menu"
+              >
+                <Menu className="h-6 w-6 text-white" />
+              </button>
+            </div>
 
             {/* Navigation Tabs - Desktop */}
             <div className="hidden md:flex items-center space-x-1 bg-white bg-opacity-10 rounded-full p-1 backdrop-blur-sm">
@@ -169,14 +225,14 @@ const NotesAppNavbar = () => {
 
         {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (
-          <div className="fixed inset-0 z-50 flex flex-col bg-black/60 md:hidden">
+          <div className="fixed inset-0 z-50 flex flex-col bg-white bg-gradient-to-b from-blue-600 via-purple-600 to-blue-800 md:hidden">
             <div className="flex justify-end p-4">
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2"
                 aria-label="Close menu"
               >
-                <X className="h-6 w-6 text-white" />
+                <X className="h-6 w-6 text-blue-700" />
               </button>
             </div>
             <div className="flex flex-col items-center gap-4 mt-8">
