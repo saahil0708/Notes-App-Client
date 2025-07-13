@@ -37,7 +37,7 @@ const NotesSection = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/notes', {
+        const res = await axios.get('https://notes-app-server-un2c.onrender.com/notes', {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -64,7 +64,7 @@ const NotesSection = () => {
     if (newNote.title.trim() || newNote.content.trim()) {
       setSaving(true);
       try {
-        const res = await axios.post('http://localhost:5000/notes', {
+        const res = await axios.post('https://notes-app-server-un2c.onrender.com/notes', {
           title: newNote.title || 'Untitled',
           content: newNote.content,
           tags: newNote.tags,
@@ -92,7 +92,7 @@ const NotesSection = () => {
   const updateNote = async (id: string, title: string, content: string) => {
     setEditLoading(true);
     try {
-      const res = await axios.put(`http://localhost:5000/notes/${id}`, {
+      const res = await axios.put(`https://notes-app-server-un2c.onrender.com/notes/${id}`, {
         title,
         content,
       }, {
@@ -121,7 +121,7 @@ const NotesSection = () => {
     if (!deletingId) return;
     setDeleteLoading(true);
     try {
-      await axios.delete(`http://localhost:5000/notes/${deletingId}`, {
+      await axios.delete(`https://notes-app-server-un2c.onrender.com/notes/${deletingId}`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });
