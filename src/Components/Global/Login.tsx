@@ -50,7 +50,7 @@ const CleanAuthForm = ({ onClose }: CleanAuthFormProps) => {
       const payload = isLogin
         ? { email: formData.email, password: formData.password }
         : { username: formData.fullName, email: formData.email, password: formData.password };
-      const baseURL = 'http://localhost:5000';
+      const baseURL = 'https://notes-app-server-un2c.onrender.com';
       const res = await axios.post(baseURL + endpoint, payload, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
